@@ -81,6 +81,10 @@
         return obj;
       })();
 
+      function goToProducts() {
+        location.href = "./products.html";
+      }
+
       function displayCart() {
         var cartArray = shoppingCart.listCart();
         var output = "";
@@ -112,12 +116,18 @@
         var footerContent;
         if (totalCart == 0) {
           footerContent =
-            "<button class='start_shopping_button'>Start Shopping</button>";
+            "<button class='start_shopping_button' onclick='goToProducts()'>Start Shopping</button>";
+          $("#empty-cart-content").html(
+            "<span class='empty-cart-notice-title'>No items in your cart</span><span class='empty-cart-notice-desc'>Your favorite items are just one click away</span>"
+          );
         } else {
           footerContent =
             "<div class='footer-note'>Promocode can be applied on payment page</div><button class='proceed_to_checkout'><span>Proceed to Checkout</span><div class='cart_amount'>Rs." +
             numberWithCommas(totalCart) +
             " <i class='fas fa-chevron-right'></i></div></button>";
+          $("#lowest-price").html(
+            "<div class='low_price_wrapper'><div class='low_price_img_wrapper'><img alt='Lowest Price' width='100%' src='../../static/images/lowest-price.png'/></div><div class='low_price_notice'>You won't find it cheaper anywhere</div></div>"
+          );
         }
         $("#modal-footer").html(footerContent);
         $("#cart-item-count").html(cartArray.length);
