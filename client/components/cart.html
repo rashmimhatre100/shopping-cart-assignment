@@ -1,6 +1,7 @@
 <html lang="en">
   <head>
     <script>
+      console.log(localStorage.getItem("cartItems"));
       const cartItemsStored = JSON.parse(localStorage.getItem("cartItems"));
       console.log("cartItemsStored ", cartItemsStored);
       let cartItems = cartItemsStored || [];
@@ -31,6 +32,86 @@
           location.href = "./products.html";
         };
         footer.appendChild(startShoppingButton);
+      } else {
+        var addedProducts = document.querySelector("#added-products");
+        cartItems.forEach(function (product, i) {
+          let wrapper = document.createElement("div");
+          wrapper.className = `cart_item`;
+
+          let cartImgWrapper = document.createElement("div");
+          cartImgWrapper.className = "cart_img_wrapper";
+          var cartImg = document.createElement("img");
+          cartImg.setAttribute("src", product.imageURL);
+          cartImg.setAttribute("width", "100%");
+          cartImg.setAttribute("alt", product.name);
+          cartImgWrapper.appendChild(cartImg);
+
+          let cartProductDetails = document.createElement("div");
+          cartProductDetails.className = `cart_item_details`;
+
+          let cartProductName = document.createElement("div");
+          cartProductName.className = `cart_item_name`;
+          cartProductName.innerHTML = product.name;
+          cartProductDetails.appendChild(cartProductName);
+
+          let quantityWrapper = document.createElement("div");
+          quantityWrapper.className = `quantity_wrapper`;
+
+          var decrement = document.createElement("button");
+          decrement.className = "quantity_decrement";
+          decrement.innerHTML = "-";
+          decrement.onclick = function () {};
+
+          var increment = document.createElement("button");
+          increment.className = "quantity_increment";
+          increment.innerHTML = "+";
+          increment.onclick = function () {};
+
+          let quantity = document.createElement("span");
+          quantity.className = `quantity`;
+          quantity.innerHTML = 1;
+
+          let cartProductPrice = document.createElement("span");
+          cartProductPrice.className = `cart_product_price`;
+          cartProductPrice.innerHTML = `X ${product.price}`;
+
+          quantityWrapper.appendChild(decrement);
+          quantityWrapper.appendChild(quantity);
+          quantityWrapper.appendChild(increment);
+          quantityWrapper.appendChild(cartProductPrice);
+          cartProductDetails.appendChild(quantityWrapper);
+
+          let finalProductPrice = document.createElement("div");
+          finalProductPrice.className = `cart_product_final_price`;
+          finalProductPrice.innerHTML = `Rs.${product.price}`;
+
+          wrapper.appendChild(cartImgWrapper);
+          wrapper.appendChild(cartProductDetails);
+          wrapper.appendChild(finalProductPrice);
+
+          addedProducts.appendChild(wrapper);
+        });
+
+        var lowestPriceBlock = document.querySelector("#lowest-price");
+        let lowestPriceWrapper = document.createElement("div");
+        lowestPriceWrapper.className = `low_price_wrapper`;
+
+        let lowPriceImgWrapper = document.createElement("div");
+        lowPriceImgWrapper.className = "low_price_img_wrapper";
+        var lowPriceImg = document.createElement("img");
+        lowPriceImg.setAttribute("src", "../../static/images/lowest-price.png");
+        lowPriceImg.setAttribute("width", "100%");
+        lowPriceImg.setAttribute("alt", "Lowest Price");
+        lowPriceImgWrapper.appendChild(lowPriceImg);
+
+        let lowPriceNotice = document.createElement("div");
+        lowPriceNotice.className = "low_price_notice";
+        lowPriceNotice.innerHTML = "You won't find it cheaper anywhere";
+
+        lowestPriceWrapper.appendChild(lowPriceImgWrapper);
+        lowestPriceWrapper.appendChild(lowPriceNotice);
+
+        lowestPriceBlock.appendChild(lowestPriceWrapper);
       }
     </script>
   </head>
@@ -43,6 +124,8 @@
         </div>
         <div class="modal-body">
           <div id="empty-cart-content"></div>
+          <div id="added-products"></div>
+          <div id="lowest-price"></div>
         </div>
         <div id="modal-footer" class="modal-footer"></div>
       </div>
