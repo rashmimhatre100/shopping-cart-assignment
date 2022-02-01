@@ -1,0 +1,126 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products</title>
+    <link rel="stylesheet" href="../cssStylesheets/footer.css" />
+    <link rel="stylesheet" href="../cssStylesheets/header.css" />
+    <link rel="stylesheet" href="../cssStylesheets/products.css" />
+    <link rel="stylesheet" href="../cssStylesheets/common.css" />
+    <link rel="stylesheet" href="../cssStylesheets/cart.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+      integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(function () {
+        $("#header").load("../common/header.html");
+        $("#footer").load("../common/footer.html");
+        $("#cart").load("./cart.html");
+      });
+      $.getJSON(
+        "../../server/categories/index.get.json",
+        function (categories) {
+          categories = categories.sort((a, b) => b.order - a.order);
+          var list = document.querySelector("#filter");
+
+          categories.forEach(function (category, i) {
+            let wrapper = document.createElement("div");
+            wrapper.className = "category_item";
+            wrapper.id = category.id;
+            wrapper.innerHTML = category.name;
+            wrapper.onclick = function () {
+              $(".product_item").hide();
+              $(`.${category.id}`).show();
+            };
+            if (category.enabled) {
+              list.appendChild(wrapper);
+            }
+          });
+        }
+      );
+
+      function showAll() {
+        $(".product_item").show();
+      }
+
+      $.getJSON("../../server/products/index.get.json", function (products) {
+        var list = document.querySelector("#products_wrapper");
+
+        products.forEach(function (product, i) {
+          let wrapper = document.createElement("div");
+          wrapper.className = `product_item ${product.category}`;
+
+          let productName = document.createElement("div");
+          productName.className = "product_name";
+          productName.innerHTML = product.name;
+
+          var imageWrapper = document.createElement("div");
+          imageWrapper.className = "product_img_wrapper";
+          var productImg = document.createElement("img");
+          productImg.setAttribute("src", product.imageURL);
+          productImg.setAttribute("width", "100%");
+          productImg.setAttribute("alt", product.name);
+          imageWrapper.appendChild(productImg);
+
+          let productDescription = document.createElement("div");
+          productDescription.className = "product_description";
+
+          productDescription.innerHTML =
+            product.description.substring(0, 175) + "...";
+
+          let productBuyPrice = document.createElement("div");
+          productBuyPrice.className = "product_footer";
+
+          let mrp = document.createElement("div");
+          mrp.className = "product_price";
+          mrp.innerHTML = `MRP Rs.${product.price}`;
+          productBuyPrice.appendChild(mrp);
+
+          var buyNowButton = document.createElement("button");
+          buyNowButton.className = "buy_now_button";
+          buyNowButton.innerHTML = "Buy Now";
+          buyNowButton.onclick = function () {
+            const itemsStored = JSON.parse(localStorage.getItem("cartItems"));
+            let cartItems = itemsStored || [];
+            localStorage.setItem(
+              "cartItems",
+              JSON.stringify([...cartItems, product])
+            );
+            var cartLength = document.querySelector("#cart_length");
+            cartLength.innerHTML = (
+              JSON.parse(localStorage.getItem("cartItems")) || []
+            ).length;
+          };
+          productBuyPrice.appendChild(buyNowButton);
+
+          wrapper.appendChild(productName);
+          wrapper.appendChild(imageWrapper);
+          wrapper.appendChild(productDescription);
+          wrapper.appendChild(productBuyPrice);
+
+          list.appendChild(wrapper);
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn">Open Modal</button>
+    <div id="header"></div>
+    <div class="products">
+      <div id="filter"></div>
+      <div id="products_wrapper"></div>
+    </div>
+    <div id="footer"></div>
+    <div id="cart"></div>
+  </body>
+</html>

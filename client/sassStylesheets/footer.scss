@@ -5,3 +5,11 @@ body {
   font: 100% $font-stack;
   color: $primary-color;
 }
+
+#footer {
+  font-size: 12px;
+  background-color: #eaeaea;
+  padding: 10px 10%;
+  color: #000;
+  font-weight: bold;
+}

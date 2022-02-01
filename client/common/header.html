@@ -1,0 +1,34 @@
+<html lang="en">
+  <head>
+    <script>
+      const itemsStored = JSON.parse(localStorage.getItem("cartItems"));
+      var cartLength = document.querySelector("#cart_length");
+      cartLength.innerHTML = (
+        JSON.parse(localStorage.getItem("cartItems")) || []
+      ).length;
+    </script>
+  </head>
+  <body>
+    <div class="header-right">
+      <div class="logo">
+        <a href="../components/home.html"
+          ><img src="../../static/images/logo.png" style="width: 100%"
+        /></a>
+      </div>
+      <div class="links">
+        <a href="../components/home.html">Home</a>
+        <a href="../components/products.html">Products</a>
+      </div>
+    </div>
+    <div class="header-left">
+      <div class="auth_links">
+        <a href="../components/login.html">Signin</a>
+        <a href="../components/register.html">Register</a>
+      </div>
+      <div class="cart">
+        <i class="fas fa-shopping-cart"></i> &nbsp;
+        <span id="cart_length">0</span>&nbsp;items
+      </div>
+    </div>
+  </body>
+</html>

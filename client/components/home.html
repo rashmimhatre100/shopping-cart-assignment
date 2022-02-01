@@ -1,0 +1,152 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="../cssStylesheets/footer.css" />
+    <link rel="stylesheet" href="../cssStylesheets/header.css" />
+    <link rel="stylesheet" href="../cssStylesheets/common.css" />
+    <link rel="stylesheet" href="../cssStylesheets/home.css" />
+    <link rel="stylesheet" href="../cssStylesheets/cart.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+      integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(function () {
+        $("#header").load("../common/header.html");
+        $("#footer").load("../common/footer.html");
+      });
+      $.getJSON(
+        "../../server/categories/index.get.json",
+        function (categories) {
+          categories = categories.sort((a, b) => b.order - a.order);
+          var list = document.querySelector("#home_categories");
+
+          categories.forEach(function (category, i) {
+            let wrapper = document.createElement("div");
+            wrapper.className = "category_item";
+
+            var imageWrapper = document.createElement("div");
+            var categoryImg = document.createElement("img");
+            categoryImg.setAttribute("src", category.imageUrl);
+            categoryImg.setAttribute("width", "50%");
+            categoryImg.setAttribute("alt", category.name);
+            imageWrapper.appendChild(categoryImg);
+
+            var categoryDescription = document.createElement("div");
+            categoryDescription.className = "category_details";
+
+            var categoryName = document.createElement("div");
+            categoryName.className = "category_name";
+            categoryName.innerHTML = category.name;
+
+            var categoryDesc = document.createElement("div");
+            categoryDesc.className = "category_desc";
+            categoryDesc.innerHTML = category.description;
+
+            var exploreButton = document.createElement("button");
+            exploreButton.className = "category_explore";
+            exploreButton.innerHTML = category.name;
+
+            categoryDescription.appendChild(categoryName);
+            categoryDescription.appendChild(categoryDesc);
+            categoryDescription.appendChild(exploreButton);
+
+            if (i % 2 == 0) {
+              imageWrapper.className = "category_image_wrapper";
+              wrapper.appendChild(imageWrapper);
+              wrapper.appendChild(categoryDescription);
+            } else {
+              imageWrapper.className = "category_image_wrapper right";
+              wrapper.appendChild(categoryDescription);
+              wrapper.appendChild(imageWrapper);
+            }
+
+            if (category.enabled) {
+              list.appendChild(wrapper);
+            }
+          });
+        }
+      );
+
+      var slideIndex = 1;
+
+      $.getJSON("../../server/banners/index.get.json", function (banners) {
+        console.log("banners ", banners);
+        var slideShowItems = document.querySelector("#slideshow_container");
+        console.log("slideShowItems ", slideShowItems);
+        banners.forEach(function (banner, i) {
+          let wrapper = document.createElement("div");
+          wrapper.className = "mySlides fade";
+
+          var categoryImg = document.createElement("img");
+          categoryImg.setAttribute("src", banner.bannerImageUrl);
+          categoryImg.setAttribute("width", "100%");
+          categoryImg.setAttribute("alt", banner.bannerImageAlt);
+          wrapper.appendChild(categoryImg);
+
+          slideShowItems.appendChild(wrapper);
+        });
+      }).then(() => {
+        showSlides(slideIndex);
+      });
+
+      function plusSlides(n) {
+        showSlides((slideIndex += n));
+      }
+
+      function currentSlide(n) {
+        showSlides((slideIndex = n));
+      }
+
+      function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        console.log("slides ", slides);
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {
+          slideIndex = 1;
+        }
+        if (n < 1) {
+          slideIndex = slides.length;
+        }
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+      }
+    </script>
+  </head>
+  <body>
+    <div id="header"></div>
+    <div class="home_wrapper">
+      <div class="slideshow_block">
+        <div id="slideshow_container">
+          <a class="prev" onclick="plusSlides(-1)">PREV</a>
+          <a class="next" onclick="plusSlides(1)">NEXT</a>
+        </div>
+      </div>
+
+      <div class="slider-dots">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+      </div>
+      <div id="home_categories"></div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+.form_wrapper {
+  display: flex;
+  padding: 5% 18%;
+}
+.form_wrapper .form_description {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.form_wrapper .form_description .title {
+  color: #1a1a1a;
+  margin: 5% 0 2% 0;
+  font-weight: bold;
+}
+.form_wrapper .form_description .description {
+  color: #393e3d;
+}
+.form_wrapper .form_container {
+  flex: 1;
+}
+.form_wrapper .form_container form {
+  display: flex;
+  flex-direction: column;
+}
+
+/*# sourceMappingURL=register.css.map */

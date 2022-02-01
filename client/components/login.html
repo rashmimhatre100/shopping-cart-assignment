@@ -1,0 +1,57 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="../cssStylesheets/footer.css" />
+    <link rel="stylesheet" href="../cssStylesheets/header.css" />
+    <link rel="stylesheet" href="../cssStylesheets/register.css" />
+    <link rel="stylesheet" href="../cssStylesheets/common.css" />
+    <link rel="stylesheet" href="../cssStylesheets/cart.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+      integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(function () {
+        $("#header").load("../common/header.html");
+        $("#footer").load("../common/footer.html");
+      });
+    </script>
+  </head>
+  <body>
+    <div id="header"></div>
+    <div class="form_wrapper">
+      <div class="form_description">
+        <span class="title">Login</span>
+        <span class="description"
+          >Get access to your Orders, Wishlist and Recommendations</span
+        >
+      </div>
+      <div class="form_container">
+        <form class="floating_form">
+          <div class="floating-label">
+            <input class="floating-input" type="email" placeholder=" " />
+            <span class="highlight"></span>
+            <label>Email</label>
+          </div>
+          <div class="floating-label">
+            <input class="floating-input" type="password" placeholder=" " />
+            <span class="highlight"></span>
+            <label>Password</label>
+          </div>
+          <input type="submit" value="Login" class="submit_button" />
+        </form>
+      </div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>
