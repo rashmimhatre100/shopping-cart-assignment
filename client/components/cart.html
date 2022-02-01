@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <script>
+      let cartTotal = 0;
       console.log(localStorage.getItem("cartItems"));
       const cartItemsStored = JSON.parse(localStorage.getItem("cartItems"));
       console.log("cartItemsStored ", cartItemsStored);
@@ -37,6 +39,7 @@
         cartItems.forEach(function (product, i) {
           let wrapper = document.createElement("div");
           wrapper.className = `cart_item`;
+          wrapper.id = `product_${product.id}`;
 
           let cartImgWrapper = document.createElement("div");
           cartImgWrapper.className = "cart_img_wrapper";
@@ -65,11 +68,24 @@
           var increment = document.createElement("button");
           increment.className = "quantity_increment";
           increment.innerHTML = "+";
-          increment.onclick = function () {};
+          increment.onclick = function () {
+            var updatedQuantity = document.querySelector(
+              `#product_${product.id} > .cart_item_details > .quantity_wrapper > .quantity`
+            );
+            updatedQuantity.innerHTML = product.quantity + 1;
+
+            localStorage.setItem(
+              "cartItems",
+              JSON.stringify([
+                ...cartItems.filter((p) => p.id !== product.id),
+                { ...product, quantity: product.quantity + 1 },
+              ])
+            );
+          };
 
           let quantity = document.createElement("span");
           quantity.className = `quantity`;
-          quantity.innerHTML = 1;
+          quantity.innerHTML = product.quantity;
 
           let cartProductPrice = document.createElement("span");
           cartProductPrice.className = `cart_product_price`;
@@ -83,8 +99,10 @@
 
           let finalProductPrice = document.createElement("div");
           finalProductPrice.className = `cart_product_final_price`;
-          finalProductPrice.innerHTML = `Rs.${product.price}`;
-
+          finalProductPrice.innerHTML = `Rs.${
+            product.price * product.quantity
+          }`;
+          cartTotal += product.price * product.quantity;
           wrapper.appendChild(cartImgWrapper);
           wrapper.appendChild(cartProductDetails);
           wrapper.appendChild(finalProductPrice);
@@ -112,6 +130,22 @@
         lowestPriceWrapper.appendChild(lowPriceNotice);
 
         lowestPriceBlock.appendChild(lowestPriceWrapper);
+
+        var footer = document.querySelector("#modal-footer");
+        var footerNote = document.createElement("div");
+        footerNote.className = "footer-note";
+        footerNote.innerHTML = "Promocode can be applied on payment page";
+        var checkoutButton = document.createElement("button");
+        checkoutButton.className = "proceed_to_checkout";
+        var checkoutText = document.createElement("span");
+        checkoutText.innerHTML = "Proceed to Checkout";
+        checkoutButton.appendChild(checkoutText);
+        var finalCartAmount = document.createElement("div");
+        finalCartAmount.className = "cart_amount";
+        finalCartAmount.innerHTML = `Rs.${cartTotal} <i class="fas fa-chevron-right"></i>`;
+        checkoutButton.appendChild(finalCartAmount);
+        footer.appendChild(footerNote);
+        footer.appendChild(checkoutButton);
       }
     </script>
   </head>

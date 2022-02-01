@@ -98,6 +98,7 @@
   }
   #added-products {
     display: flex;
+    flex-direction: column;
     .cart_img_wrapper {
       width: 20%;
       img {
@@ -126,6 +127,7 @@
             background: #be2856;
             border: 1px solid #be2856;
             color: #fff;
+            cursor: pointer;
           }
           .quantity {
             margin: 0 12px;
@@ -168,5 +170,24 @@
     color: #fff;
     padding: 10px;
     cursor: pointer;
+  }
+  .footer-note {
+    color: #252525;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 10px 0;
+  }
+  .proceed_to_checkout {
+    width: 100%;
+    color: #fff;
+    background: #bf2957;
+    border: 1px solid #bf2957;
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: lighter;
   }
 }
