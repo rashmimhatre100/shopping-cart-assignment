@@ -1,19 +1,50 @@
 <html lang="en">
-  <head> </head>
+  <head>
+    <script>
+      const cartItemsStored = JSON.parse(localStorage.getItem("cartItems"));
+      console.log("cartItemsStored ", cartItemsStored);
+      let cartItems = cartItemsStored || [];
+      var cartLength = document.querySelector("#cart-item-count");
+      const cartItemsCount = (cartItems || []).length;
+      cartLength.innerHTML = cartItemsCount;
+
+      if (cartItemsCount == 0) {
+        var emptyCartDOM = document.querySelector("#empty-cart-content");
+
+        let noItemNoticeTitle = document.createElement("span");
+        noItemNoticeTitle.className = "empty-cart-notice-title";
+        noItemNoticeTitle.innerHTML = "No items in your cart";
+
+        let noItemNoticeDesc = document.createElement("span");
+        noItemNoticeDesc.className = "empty-cart-notice-desc";
+        noItemNoticeDesc.innerHTML =
+          "Your favorite items are just one click away";
+
+        emptyCartDOM.appendChild(noItemNoticeTitle);
+        emptyCartDOM.appendChild(noItemNoticeDesc);
+
+        var footer = document.querySelector("#modal-footer");
+        var startShoppingButton = document.createElement("button");
+        startShoppingButton.className = "start_shopping_button";
+        startShoppingButton.innerHTML = "Start Shopping";
+        startShoppingButton.onclick = function () {
+          location.href = "./products.html";
+        };
+        footer.appendChild(startShoppingButton);
+      }
+    </script>
+  </head>
   <body>
     <div id="cart_modal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
           <span class="close">&times;</span>
-          <h2>Modal Header</h2>
+          <span>My Cart (<span id="cart-item-count"></span> item)</span>
         </div>
         <div class="modal-body">
-          <p>Some text in the Modal Body</p>
-          <p>Some other text...</p>
+          <div id="empty-cart-content"></div>
         </div>
-        <div class="modal-footer">
-          <h3>Modal Footer</h3>
-        </div>
+        <div id="modal-footer" class="modal-footer"></div>
       </div>
     </div>
     <script>

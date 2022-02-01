@@ -81,9 +81,7 @@
       var slideIndex = 1;
 
       $.getJSON("../../server/banners/index.get.json", function (banners) {
-        console.log("banners ", banners);
         var slideShowItems = document.querySelector("#slideshow_container");
-        console.log("slideShowItems ", slideShowItems);
         banners.forEach(function (banner, i) {
           let wrapper = document.createElement("div");
           wrapper.className = "mySlides fade";
@@ -111,7 +109,6 @@
       function showSlides(n) {
         var i;
         var slides = document.getElementsByClassName("mySlides");
-        console.log("slides ", slides);
         var dots = document.getElementsByClassName("dot");
         if (n > slides.length) {
           slideIndex = 1;
