@@ -61,7 +61,6 @@
 
 .close:hover,
 .close:focus {
-  color: #000;
   text-decoration: none;
   cursor: pointer;
 }
@@ -189,5 +188,6 @@
     justify-content: space-between;
     align-items: center;
     font-weight: lighter;
+    cursor: pointer;
   }
 }

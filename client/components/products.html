@@ -16,6 +16,7 @@
       integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
       crossorigin="anonymous"
     />
+    <script src="../common/common.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.js"
       integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -83,7 +84,7 @@
 
           let mrp = document.createElement("div");
           mrp.className = "product_price";
-          mrp.innerHTML = `MRP Rs.${product.price}`;
+          mrp.innerHTML = `MRP Rs.${numberWithCommas(product.price)}`;
           productBuyPrice.appendChild(mrp);
 
           var buyNowButton = document.createElement("button");
@@ -112,6 +113,7 @@
             cartLength.innerHTML = (
               JSON.parse(localStorage.getItem("cartItems")) || []
             ).length;
+            location.reload();
           };
           productBuyPrice.appendChild(buyNowButton);
 

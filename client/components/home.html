@@ -25,6 +25,7 @@
       $(function () {
         $("#header").load("../common/header.html");
         $("#footer").load("../common/footer.html");
+        $("#cart").load("./cart.html");
       });
       $.getJSON(
         "../../server/categories/index.get.json",
@@ -146,5 +147,6 @@
       <div id="home_categories"></div>
     </div>
     <div id="footer"></div>
+    <div id="cart"></div>
   </body>
 </html>
